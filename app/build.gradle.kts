@@ -38,9 +38,7 @@ android {
         jvmTarget = "11"
     }
 }
-
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -49,4 +47,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    //Chart
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 }
