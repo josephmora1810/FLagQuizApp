@@ -9,16 +9,20 @@ import java.io.FileOutputStream
 import java.io.IOException
 import java.io.OutputStream
 
+//es un metodo de la clase SQLiteOpenHelper que se llama cuando la base de datos no existe
 class DatabaseCopyHelper(context: Context) : SQLiteOpenHelper(context,DB_NAME,null,1) {
 
+    //
     var DB_PATH : String? = null
     var myContext : Context? = null
     lateinit var myDataBase : SQLiteDatabase
 
+    //companion object sirve para crear variables y metodos estaticos
     companion object{
         var DB_NAME : String = "countries.db"
     }
 
+    //init es un metodo que se ejecuta al instanciar la clase
     init {
         DB_PATH = "/data/data/" + context.packageName + "/" + "databases/"
         myContext = context

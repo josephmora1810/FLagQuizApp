@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     // Kotlin serialization plugin for type safe routes and navigation arguments
     kotlin("plugin.serialization") version "2.0.21"
+    id("androidx.navigation.safeargs.kotlin") version "2.9.5"
 }
 
 android {
@@ -42,7 +43,7 @@ android {
 }
 dependencies {
     implementation(libs.androidx.fragment)
-    val nav_version = "2.9.4"
+    val nav_version = "2.9.5"
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
