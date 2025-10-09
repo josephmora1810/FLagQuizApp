@@ -1,16 +1,26 @@
 package com.jmora.flagquizapp.view
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
+import com.jmora.flagquizapp.R
 import com.jmora.flagquizapp.databinding.FragmentResultBinding
 
 class ResultFragment : Fragment() {
 
 
     lateinit var fragmentResultBinding: FragmentResultBinding
+    var correctNumber = 0F
+    var wrongNumber = 0F
+    var emptyNumber = 0F
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -19,12 +29,46 @@ class ResultFragment : Fragment() {
 
         fragmentResultBinding = FragmentResultBinding.inflate(inflater, container, false)
 
+        val args: ResultFragmentArgs by navArgs()
+        correctNumber = args.correct.toFloat()
+        wrongNumber = args.wrong.toFloat()
+        emptyNumber = args.empty.toFloat()
+
+        val barEntriesArrayListCorrect = ArrayList<BarEntry>()
+        val barEntriesArrayListWrong = ArrayList<BarEntry>()
+        val barEntriesArrayListEmpty = ArrayList<BarEntry>()
+
+        barEntriesArrayListCorrect.add(BarEntry(0F, correctNumber))
+        barEntriesArrayListWrong.add(BarEntry(1F, wrongNumber))
+        barEntriesArrayListEmpty.add(BarEntry(2F, emptyNumber))
+
+        val barDataSetCorrect = BarDataSet(barEntriesArrayListCorrect, "Correct Number").apply {
+            color = Color.GREEN
+            valueTextSize = 24F
+            setValueTextColors(arrayListOf(Color.BLACK))
+        };
+        val barDataSetWrong = BarDataSet(barEntriesArrayListWrong, "Wrong Number").apply {
+            color = Color.RED;
+            valueTextSize = 24F
+            setValueTextColors(arrayListOf(Color.BLACK))
+
+        }
+        val barDataSetEmpty = BarDataSet(barEntriesArrayListEmpty, "Empty Number").apply {
+            color = Color.YELLOW;
+            valueTextSize = 24F
+            setValueTextColors(arrayListOf(Color.BLACK))
+        }
+
+        val barData = BarData(barDataSetCorrect, barDataSetWrong, barDataSetEmpty)
+
+        fragmentResultBinding.resultChart.data = barData
+
         fragmentResultBinding.buttonNewQuiz.setOnClickListener {
-            fragmentResultBinding.buttonNewQuiz.text = "Clicked"
+            this.findNavController().popBackStack(R.id.homeFragment, inclusive = false)
         }
 
         fragmentResultBinding.buttonExit.setOnClickListener {
-            fragmentResultBinding.buttonExit.text = "Clicked"
+            requireActivity().finish()
         }
 
         // Inflate the layout for this fragment
